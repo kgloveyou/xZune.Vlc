@@ -10,19 +10,19 @@ namespace xZune.Vlc.Wpf
             LibVlcPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName) + @"\LibVlc\";
         }
 
-        #region 静态属性 LibVlcPath
+        #region LibVlcPath
         public static String LibVlcPath { get; set; }
         #endregion
 
-        #region 静态属性 VlcOption
+        #region VlcOption
         public static String[] VlcOption { get; set; }
         #endregion
 
-        #region 只读静态属性 Vlc
+        #region Vlc
         public static Vlc Vlc { get; private set; }
         #endregion
 
-        #region 只读静态属性 IsInited
+        #region IsInited
         public static bool IsInitialized { get; private set; }
         #endregion
 
