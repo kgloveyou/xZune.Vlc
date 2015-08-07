@@ -35,6 +35,8 @@ namespace xZune.Vlc.Wpf
         GCHandle _formatCallbackHandle;
         GCHandle _cleanupCallbackHandle;
 
+        float _startingPosition;
+
         static String CombinePath(String path1, String path2)
         {
             DirectoryInfo dir = new DirectoryInfo(Path.Combine(path1, path2));
@@ -225,6 +227,15 @@ namespace xZune.Vlc.Wpf
             {
                 _fpsCount++;
             }
+
+            //skip the first frame when a starting position is set and sets the position to the starting position
+            if (_startingPosition > 0)
+            {
+                Position = _startingPosition;
+                _startingPosition = 0;
+                    return;
+            }
+
             _context.Display();
 
             if (_snapshotContext == null) return;
@@ -785,8 +796,14 @@ namespace xZune.Vlc.Wpf
             VlcMediaPlayer.Media.ParseAsync();
         }
 
-        public void Play()
+        /// <summary>
+        /// Starts the VLC Media Player
+        /// </summary>
+        /// <param name="startingPosition">The starting position of the media (0 - 1)</param>
+        public void Play(float startingPosition = 0)
         {
+            _startingPosition = startingPosition;
+
             VlcMediaPlayer.SetVideoDecodeCallback(_lockCallback, _unlockCallback, _displayCallback, IntPtr.Zero);
             VlcMediaPlayer.SetVideoFormatCallback(_formatCallback, _cleanupCallback);
 
